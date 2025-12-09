@@ -372,17 +372,27 @@ aws s3 sync dist/ s3://tu-bucket-sgmi/
 ### **Deployment en GitHub Pages**
 
 ```bash
-# 1. Modificar vite.config.ts
-# base: '/SGMI/', (agrega esta línea)
+# 1. Modificar `vite.config.ts` (asegúrate del nombre del repo)
+# Si tu repositorio se llama `SGMI-Frontend`:
+# base: '/SGMI-Frontend/'
 
-# 2. Agregar script a package.json
-"deploy": "npm run build && npx gh-pages -d dist"
+# 2. Agregar script a `package.json` (opcional si usas GitHub Actions)
+# "predeploy": "npm run build",
+# "deploy": "gh-pages -d dist"
 
-# 3. Deploy
+# 3. Deploy (local, opcional — Actions automatiza esto)
 npm run deploy
 
-# URL: https://tu-usuario.github.io/SGMI/
+# URL esperada: https://<tu-usuario>.github.io/SGMI-Frontend/
 ```
+
+Notas rápidas de troubleshooting:
+
+- Si la app carga 404s en producción, revisa el valor de `base` en `vite.config.ts` — debe coincidir con el nombre del repositorio cuando usas GitHub Pages (project site).
+- Si usas el flujo oficial de Actions (`upload-pages-artifact` + `deploy-pages`), revisa en el repo `Settings -> Pages` que no haya restricciones inusuales y que las `Actions permissions` permitan desplegar.
+- Si el workflow falla por versiones de acciones, actualiza las acciones (`upload-pages-artifact@v2`, `deploy-pages@v1`) — ya se configuró en este repo.
+- Para publicar manualmente (si Actions no funciona), crea/actualiza la rama `gh-pages` con el contenido de `dist/` o usa `gh-pages` npm package.
+
 
 ---
 

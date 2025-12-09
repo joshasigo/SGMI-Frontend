@@ -256,28 +256,50 @@ Sigue las instrucciones interactivas
 
 ### **Opción 3: GitHub Pages (Gratis)**
 
-**Paso 1: Modificar `vite.config.ts`**
-```typescript
-export default defineConfig({
-  base: '/SGMI/', // Tu repositorio
-  plugins: [react()],
-  // ... resto de configuración
-})
-```
+**Resumen:** esta guía ya está configurada para publicar el sitio en GitHub Pages usando `gh-pages` o mediante el workflow de GitHub Actions.
 
-**Paso 2: Agregar Script al `package.json`**
-```json
-"scripts": {
-  "deploy": "npm run build && npx gh-pages -d dist"
-}
-```
+1) Configuración aplicada en este repositorio
 
-**Paso 3: Deploy**
+- `vite.config.ts`: se estableció `base: '/SGMI-Frontend/'` (ajusta si tu repo tiene otro nombre).
+- `package.json`: se añadieron los scripts `predeploy` (construye) y `deploy` (publica usando `gh-pages`).
+- Workflow: existe `.github/workflows/deploy-gh-pages.yml` que construye y publica `dist/` a GitHub Pages al hacer push en `main`.
+
+2) Pasos para desplegar (localmente) — PowerShell
+
 ```powershell
+cd "c:\Users\josha\Desktop\Trabajos Carrera Ing desarrollo de Software IBERO\Proyecto de software 2025-2\proyecto sgmi\SGMI DESARROLLO FRONTEND WED DESPLIEGUE 2"
+npm install
+# Construir
+npm run build
+# Desplegar manualmente con gh-pages (opcional)
 npm run deploy
 ```
 
-Tu app estará en: `https://tu-usuario.github.io/SGMI/`
+3) Despliegue automático con GitHub Actions
+
+- Haz commit y push a la rama `main`:
+
+```powershell
+git add .
+git commit -m "Configurar despliegue a GitHub Pages"
+git push origin main
+```
+
+- La acción en `.github/workflows/deploy-gh-pages.yml` ejecutará `npm ci`, `npm run build` y publicará `./dist` en la rama `gh-pages`. GitHub Pages servirá el contenido desde esa rama y la URL será:
+
+`https://<tu-usuario>.github.io/SGMI-Frontend/`
+
+4) Verificar en GitHub
+
+- En el repositorio en GitHub, ve a `Settings` → `Pages`. Si usas el workflow `peaceiris/actions-gh-pages`, la rama `gh-pages` será creada automáticamente; la sección Pages mostrará la URL pública.
+- Si la URL no aparece inmediatamente, espera unos minutos y revisa la pestaña `Actions` para ver la ejecución y posibles errores.
+
+5) Notas y ajustes
+
+- Si tu repositorio tiene otro nombre, actualiza `base` en `vite.config.ts` y repite `npm run build` antes de desplegar.
+- Si quieres un dominio personalizado, configura `CNAME` en `dist/` o ajusta desde la sección Pages en GitHub.
+- `gh-pages` ya fue agregado como dependencia de desarrollo; si prefieres no usar el workflow, `npm run deploy` publicará la carpeta `dist` en la rama `gh-pages`.
+
 
 ---
 
