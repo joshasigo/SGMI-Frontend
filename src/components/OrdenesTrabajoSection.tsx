@@ -12,7 +12,7 @@
  */
 
 import { useState } from 'react';
-import { Plus, Search, Filter, MoreVertical, Edit, Trash2, Eye } from 'lucide-react';
+import { Plus, Search, Filter, MoreVertical, Edit, Trash2, Eye, FileSearch } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import {
@@ -28,6 +28,8 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
+  DropdownMenuLabel,
 } from './ui/dropdown-menu';
 import { Badge } from './ui/badge';
 
@@ -122,10 +124,45 @@ export function OrdenesTrabajoSection() {
           <h2 className="text-gray-900">Órdenes de Trabajo</h2>
           <p className="text-gray-600">Gestión de órdenes de mantenimiento</p>
         </div>
-        <Button className="gap-2">
-          <Plus className="w-4 h-4" />
-          Nueva Orden
-        </Button>
+        <div className="flex gap-3">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="gap-2">
+                <FileSearch className="w-4 h-4" />
+                Consultar Orden
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuLabel>Buscar por</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="gap-2">
+                <Search className="w-4 h-4" />
+                Buscar por ID
+              </DropdownMenuItem>
+              <DropdownMenuItem className="gap-2">
+                <Search className="w-4 h-4" />
+                Buscar por Nombre de Equipo
+              </DropdownMenuItem>
+              <DropdownMenuItem className="gap-2">
+                <Search className="w-4 h-4" />
+                Buscar por Técnico
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="gap-2">
+                <Filter className="w-4 h-4" />
+                Filtrar por Estado
+              </DropdownMenuItem>
+              <DropdownMenuItem className="gap-2">
+                <Filter className="w-4 h-4" />
+                Filtrar por Prioridad
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <Button className="gap-2">
+            <Plus className="w-4 h-4" />
+            Nueva Orden
+          </Button>
+        </div>
       </div>
 
       <div className="flex gap-3">
