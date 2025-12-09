@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
@@ -16,6 +19,14 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
+      - name: Debug git environment
+        run: |
+          echo "PWD: $(pwd)"
+          git --version
+          git config --list
+          git remote -v
+          git branch -a
+          ls -la
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
