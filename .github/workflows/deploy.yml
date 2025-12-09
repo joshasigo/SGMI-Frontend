@@ -29,15 +29,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
 
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: |
+          npm cache clean --force
+          npm install --legacy-peer-deps
 
       - name: Build project
         run: npm run build
         env:
           CI: false
+          NODE_ENV: production
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
